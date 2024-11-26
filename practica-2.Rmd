@@ -1,0 +1,68 @@
+---
+title: "Practica 2"
+author: "Gonzalo Cruz Gómez, "
+date: "2024-11-26"
+output: pdf_document
+---
+
+# Ejercicio 1
+
+# Ejercicio 2
+
+# Ejercicio 3
+
+# Ejercicio 4
+
+```{r}
+
+p0 <- 0.3
+n <- 1000
+r <- 400 
+
+
+calculate <- function(p0, n, r, parametrizacion){
+  if(parametrizacion == 1){
+    Z <- r - n*p0
+    V <- n*p0*(1-p0)
+  }
+  else if (parametrizacion == 2){
+    Z <- (r-n*p0)/(p0*(1-p0))
+    V <- n/(p0*(1-p0))
+  }
+  else if (parametrizacion == 3) {
+    Z <- (2 / sqrt(1 - p0)) * (r / sqrt(p0) - n * sqrt(p0))
+    V <- 1 #revisar
+    
+}
+
+  return (list(Z=Z, V=V))
+}
+
+result1 <- calculate(p0, n, r, parametrizacion = 1)
+result2 <- calculate(p0, n, r, parametrizacion = 2)
+result3 <- calculate(p0, n, r, parametrizacion = 3)
+
+cat("Resultados para parametrización 1:\n")
+print (result1)
+cat("Resultados para parametrización 2:\n")
+print (result2)
+cat("Resultados para parametrización 3:\n")
+print (result3)
+
+```
+#Ejercicio 5
+
+```{r}
+
+set.seed(123)         
+n <- 1000            
+p0 <- 0.3             
+alpha <- 0.05        
+
+data <- rbinom(1000, 1, p0)
+r <- sum(data)
+p <- r/n #proporcion observada en las simulaciones
+
+```
+
+
