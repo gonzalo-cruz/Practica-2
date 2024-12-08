@@ -1,17 +1,57 @@
 ---
 title: "Practica 2"
-author: "Gonzalo Cruz Gómez, "
+author: "Gonzalo Cruz Gómez, Daniel Fernandez Magariños"
 date: "2024-11-26"
 output: pdf_document
 ---
 
-# Ejercicio 1
+### Ejercicio 1
 
-# Ejercicio 2
+Demostrar que la log-verosimilitud de p basada en n observaciones es:
 
-# Ejercicio 3
+$$
+x \sim \text{Bin}(n, p)
+$$
 
-# Ejercicio 4
+$$
+L(x) = \binom{n}{x} p^r (1-p)^{n-r}
+$$
+
+$$
+\ell(p|r) = \log \binom{n}{r} + r \log(p) + (n - r) \log(1-p)
+$$
+
+$$
+= r \log\left(\frac{p}{1-p}\right) + n \log(1-p)
+$$
+
+### Ejercicio 2
+
+$$
+\bar{I}(p) = \mathbb{E} \left[ \left( \frac{\partial^2}{\partial p^2} \log L(p) \right) \right]
+$$
+
+$$
+\frac{\partial \ell}{\partial p} = \frac{r}{p} + \frac{r - n}{1 - p}, \quad \frac{\partial^2}{\partial p^2} = -\frac{r}{p^2} - \frac{n - r}{(1-p)^2}.
+$$
+
+$$
+\mathbb{E}\left[-\frac{\partial^2}{\partial p^2}\right] = \mathbb{E}\left[\frac{r}{p^2}\right] + \mathbb{E}\left[\frac{n - r}{(1-p)^2}\right]=
+$$
+
+$$
+= \frac{n}{p} - \frac{np}{(1-p)^2} + \frac{n}{(1-p)²} = \frac{n(1-p)²-np²+np}{p(1-p)^2 } = 
+$$ $$
+\frac{n(1-2p+p²)-np²+np}{p(1-p)²} = \frac{n-np}{p(1-p)²} = \frac{n(1-p)}{p(1-p)²} = \frac{n}{p(1-p)}
+$$
+
+$$
+{\bar{I}(p) = \frac{n}{p(1-p)}}
+$$
+
+### Ejercicio 3
+
+### Ejercicio 4
 
 ```{r}
 
@@ -31,7 +71,7 @@ calculate <- function(p0, n, r, parametrizacion){
   }
   else if (parametrizacion == 3) {
     Z <- (2 / sqrt(1 - p0)) * (r / sqrt(p0) - n * sqrt(p0))
-    V <- 1 #revisar
+    V <- 4*n
     
 }
 
@@ -50,19 +90,67 @@ cat("Resultados para parametrización 3:\n")
 print (result3)
 
 ```
+
 #Ejercicio 5
 
 ```{r}
+set.seed(123)
+n <- 1000
+p0 <- 0.3
+p <- 0.4
+alpha <- 0.05  # asumimos nivel de significancia al 95%
 
-set.seed(123)         
-n <- 1000            
-p0 <- 0.3             
-alpha <- 0.05        
-
-data <- rbinom(1000, 1, p0)
+data <- rbinom(1000, 1, p)
 r <- sum(data)
-p <- r/n #proporcion observada en las simulaciones
+p <- r/n  # proporción de las simulaciones
+
+# almacenamos en 3 variables
+result_1 <- calculate(p0, n, r, parametrizacion = 1)
+result_2 <- calculate(p0, n, r, parametrizacion = 2)
+result_3 <- calculate(p0, n, r, parametrizacion = 3)
+
+cat("Resultados parametrización 1:\n")
+print(result_1)
+cat("Resultados parametrización 2:\n")
+print(result_2)
+cat("Resultados parametrización 3:\n")
+print(result_3)
+
+theta_1 <- log(p * (1 - p0) / p0 * (1 - p))
+theta_2 <- p - p0
+theta_3 <- asin(sqrt(p)) - asin(sqrt(p0))
 
 ```
 
+### Ejercicio 6
 
+### Ejercicio 7
+
+```{r}
+# Parámetros enunciado
+p0 <- 0.003
+p <- 0.006
+alpha <- 0.025
+beta <- 0.20
+
+# Percentiles z_alpha/2 y z_beta
+z_alpha <- qnorm(1 - alpha / 2)  
+z_beta <- qnorm(1 - beta)       
+
+# θ = log((p(1-p0)) / (p0(1-p)))
+n1 <- (z_alpha + z_beta)^2 / ( (log((p * (1 - p0)) / (p0 * (1 - p)))) ^ 2 * p0 * (1 - p0))
+
+# θ = p - p0
+n2 <- (z_alpha + z_beta)^2 /((p-p0)^2 * p0 * (1 - p0))
+
+# θ = arcsin(sqrt(p)) - arcsin(sqrt(p0))
+n3 <- (4 * p0 * (z_alpha + z_beta)^2) / ((p - p0)^2)
+
+cat("Tamaño muestral para cada parametrización:\n")
+cat("θ = log((p(1-p0)) / (p0(1-p))): n =", n1, "\n")
+cat("θ = p - p0: n =", n2, "\n")
+cat("θ = arcsin(sqrt(p)) - arcsin(sqrt(p0)): n =", n3, "\n")
+
+```
+
+### Ejercicio 8
