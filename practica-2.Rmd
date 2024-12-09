@@ -91,7 +91,7 @@ print (result3)
 
 ```
 
-#Ejercicio 5
+### Ejercicio 5
 
 ```{r}
 set.seed(123)
@@ -123,6 +123,48 @@ theta_3 <- asin(sqrt(p)) - asin(sqrt(p0))
 ```
 
 ### Ejercicio 6
+
+$$
+V_1 = n \, p_0 \, (1 - p_0)
+$$
+
+$$
+V_2 = \frac{n}{p_0(1-p_0)}
+$$
+
+$$
+V_3 = 4n
+$$
+
+$$
+V = \frac{(2 z_{\alpha} + z_{\beta})^2}{\theta_R} 
+$$
+
+Primera parametrización:
+
+$$
+n = \frac{(2 z_{\alpha} + z_{\beta})^2}{\theta_R² .p_0(1-p_0)} = \frac{(2 z_{\alpha} + z_{\beta})^2}{\log \left( \frac{p(1-p_0)}{p_0(1-p)} \right)^2 \, p_0 \, (1 - p_0)}
+$$
+
+Segunda parametrización:
+
+$$
+n = \frac{(2 z_{\alpha} + z_{\beta})^2}{(p - p_0)^2 \, p_0 \, (1 - p_0)}
+$$
+
+Tercera parametrización:
+
+$$
+n = \frac{(2 z_{\alpha} + z_{\beta})^2}{4 \theta^2}= \frac{(2 z_{\alpha} + z_{\beta})^2}{4(\arcsin\sqrt p-\arcsin\sqrt p_0)²}
+$$
+
+$$
+Para\space valores\space de \space\theta_R\space pequeños:
+$$
+
+$$
+\theta = \frac{p - p_0}{2p}, \quad n = \frac{4 p_0 \, (2 z_{\alpha} + z_{\beta})^2}{(p - p_0)^2}
+$$
 
 ### Ejercicio 7
 
