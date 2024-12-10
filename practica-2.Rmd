@@ -54,7 +54,7 @@ $$
 ### Ejercicio 4
 
 ```{r}
-
+#valores dummy
 p0 <- 0.3
 n <- 1000
 r <- 400 
@@ -169,3 +169,40 @@ cat("θ = arcsin(sqrt(p)) - arcsin(sqrt(p0)): n =", ceiling(n3), "\n")
 
 
 ### Ejercicio 8
+
+```{r}
+p0 <- 0.003 
+p <- 0.006 
+n1 <- ceiling(n1) # log
+n2 <- ceiling(n2) # diferencia
+n3 <- ceiling(n3) # arcsin
+
+n <- c(n1, n2, n3)
+
+calcular_errores<- function(n, p0, p) {
+  # error estándar de H0
+  stderror_h0 <- sqrt(p0 * (1 - p0) / n)
+  v_crit <- p0 + 1.96 * stderror_h0
+  
+  # error tipo 1
+  error_1 <- pnorm(v_crit, mean = p0, sd = stderror_h0, lower.tail = FALSE)
+  
+  # error estándar de H1
+  stderror_h1 <- sqrt(p * (1 - p) / n)
+  
+  # potencia
+  potencia <- pnorm(v_crit, mean = p, sd = stderror_h1, lower.tail = FALSE)
+  
+  
+  cat(sprintf("n = %d:\n", n))
+  cat(sprintf("Valor crítico: %f\n", v_crit))
+  cat(sprintf("Error Tipo I (α): %f\n", error_1))
+  cat(sprintf("Potencia (1-β): %f\n\n", potencia))
+}
+# calculamos para cada una de las parametrizaciones
+for (size in n) {
+  calcular_errores(size, p0, p)
+}
+
+```
+
