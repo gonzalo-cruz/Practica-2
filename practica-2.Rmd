@@ -93,35 +93,6 @@ print (result3)
 
 ### Ejercicio 5
 
-```{r}
-set.seed(123)
-n <- 1000
-p0 <- 0.3
-p <- 0.4
-alpha <- 0.05  # asumimos nivel de significancia al 95%
-
-data <- rbinom(1000, 1, p)
-r <- sum(data)
-p <- r/n  # proporción de las simulaciones
-
-# almacenamos en 3 variables
-result_1 <- calculate(p0, n, r, parametrizacion = 1)
-result_2 <- calculate(p0, n, r, parametrizacion = 2)
-result_3 <- calculate(p0, n, r, parametrizacion = 3)
-
-cat("Resultados parametrización 1:\n")
-print(result_1)
-cat("Resultados parametrización 2:\n")
-print(result_2)
-cat("Resultados parametrización 3:\n")
-print(result_3)
-
-theta_1 <- log(p * (1 - p0) / p0 * (1 - p))
-theta_2 <- p - p0
-theta_3 <- asin(sqrt(p)) - asin(sqrt(p0))
-
-```
-
 ### Ejercicio 6
 
 $$
@@ -137,25 +108,25 @@ V_3 = 4n
 $$
 
 $$
-V = \frac{(2 z_{\alpha} + z_{\beta})^2}{\theta_R} 
+V = \frac{(z_{\alpha} + z_{\beta})^2}{\theta_R} 
 $$
 
 Primera parametrización:
 
 $$
-n = \frac{(2 z_{\alpha} + z_{\beta})^2}{\theta_R² .p_0(1-p_0)} = \frac{(2 z_{\alpha} + z_{\beta})^2}{\log \left( \frac{p(1-p_0)}{p_0(1-p)} \right)^2 \, p_0 \, (1 - p_0)}
+n = \frac{( z_{\alpha} + z_{\beta})^2}{\theta_R² .p_0(1-p_0)} = \frac{( z_{\alpha} + z_{\beta})^2}{\log \left( \frac{p(1-p_0)}{p_0(1-p)} \right)^2 \, p_0 \, (1 - p_0)}
 $$
 
 Segunda parametrización:
 
 $$
-n = \frac{(2 z_{\alpha} + z_{\beta})^2}{(p - p_0)^2 \, p_0 \, (1 - p_0)}
+n = \frac{(z_{\alpha} + z_{\beta})^2p_0  (1 - p_0)}{(p - p_0)^2 }
 $$
 
 Tercera parametrización:
 
 $$
-n = \frac{(2 z_{\alpha} + z_{\beta})^2}{4 \theta^2}= \frac{(2 z_{\alpha} + z_{\beta})^2}{4(\arcsin\sqrt p-\arcsin\sqrt p_0)²}
+n = \frac{(z_{\alpha} + z_{\beta})^2}{4 \theta^2}= \frac{( z_{\alpha} + z_{\beta})^2}{4(\arcsin\sqrt p-\arcsin\sqrt p_0)²}
 $$
 
 $$
@@ -163,7 +134,7 @@ Para\space valores\space de \space\theta_R\space pequeños:
 $$
 
 $$
-\theta = \frac{p - p_0}{2p}, \quad n = \frac{4 p_0 \, (2 z_{\alpha} + z_{\beta})^2}{(p - p_0)^2}
+\theta = \frac{p - p_0}{2p}, \quad n = \frac{4 p_0 \, (z_{\alpha} + z_{\beta})^2}{(p - p_0)^2}
 $$
 
 ### Ejercicio 7
@@ -176,23 +147,25 @@ alpha <- 0.025
 beta <- 0.20
 
 # Percentiles z_alpha/2 y z_beta
-z_alpha <- qnorm(1 - alpha / 2)  
+z_alpha <- qnorm(1 - alpha/2)  
 z_beta <- qnorm(1 - beta)       
 
 # θ = log((p(1-p0)) / (p0(1-p)))
-n1 <- (z_alpha + z_beta)^2 / ( (log((p * (1 - p0)) / (p0 * (1 - p)))) ^ 2 * p0 * (1 - p0))
+n1 <- (z_alpha + z_beta)^2 / (log((p * (1 - p0)) / (p0 * (1 - p)))^2 * p0 * (1 - p0))
 
 # θ = p - p0
-n2 <- (z_alpha + z_beta)^2 /((p-p0)^2 * p0 * (1 - p0))
+n2 <- (z_alpha + z_beta)^2 * p0 * (1 - p0) / ((p-p0)^2)
 
 # θ = arcsin(sqrt(p)) - arcsin(sqrt(p0))
-n3 <- (4 * p0 * (z_alpha + z_beta)^2) / ((p - p0)^2)
+n3 <- (z_alpha + z_beta)^2 / (4*(asin(sqrt(p))-asin(sqrt(p0)))^2)
 
+# usamos ceiling(n) para redondear al siguiente entero
 cat("Tamaño muestral para cada parametrización:\n")
-cat("θ = log((p(1-p0)) / (p0(1-p))): n =", n1, "\n")
-cat("θ = p - p0: n =", n2, "\n")
-cat("θ = arcsin(sqrt(p)) - arcsin(sqrt(p0)): n =", n3, "\n")
+cat("θ = log((p(1-p0)) / (p0(1-p))): n =", ceiling(n1), "\n")
+cat("θ = p - p0: n =", ceiling(n2), "\n")
+cat("θ = arcsin(sqrt(p)) - arcsin(sqrt(p0)): n =", ceiling(n3), "\n")
 
 ```
+
 
 ### Ejercicio 8
