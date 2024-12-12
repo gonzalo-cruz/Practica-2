@@ -1,6 +1,6 @@
 ---
 title: "Practica 2"
-author: "Gonzalo Cruz Gómez, Daniel Fernandez Magariños"
+author: "Gonzalo Cruz Gómez, Daniel "
 date: "2024-11-26"
 output:
   pdf_document:
@@ -60,7 +60,7 @@ $$
 ### Ejercicio 4
 
 ```{r}
-#valores dummy
+#valores de prueba
 p0 <- 0.3
 n <- 1000
 r <- 400 
@@ -171,57 +171,22 @@ cat("θ = arcsin(sqrt(p)) - arcsin(sqrt(p0)): n =", ceiling(n3), "\n")
 
 ### Ejercicio 8
 
-```{r}
-p0 <- 0.003 
-p <- 0.006 
-n1 <- ceiling(n1) # log
-n2 <- ceiling(n2) # diferencia
-n3 <- ceiling(n3) # arcsin
-
-n <- c(n1, n2, n3)
-
-calcular_errores<- function(n, p0, p) {
-  # error estándar de H0
-  stderror_h0 <- sqrt(p0 * (1 - p0) / n)
-  v_crit <- p0 + 1.96 * stderror_h0
-  
-  # error tipo 1
-  error_1 <- pnorm(v_crit, mean = p0, sd = stderror_h0, lower.tail = FALSE)
-  
-  # error estándar de H1
-  stderror_h1 <- sqrt(p * (1 - p) / n)
-  
-  # potencia
-  potencia <- pnorm(v_crit, mean = p, sd = stderror_h1, lower.tail = FALSE)
-  
-  
-  cat(sprintf("n = %d:\n", n))
-  cat(sprintf("Valor crítico: %f\n", v_crit))
-  cat(sprintf("Error Tipo I (α): %f\n", error_1))
-  cat(sprintf("Potencia (1-β): %f\n\n", potencia))
-}
-# calculamos para cada una de las parametrizaciones
-for (size in n) {
-  calcular_errores(size, p0, p)
-}
-
-```
-
 ### Ejercicio 9
 
 ### Ejercicio 10
 
-Utilizamos la prueba de chi-cuadrado de bondad de ajuste, ya que nos permite comparar una distribución observada con la distribución teórica esperada.
+Utilizamos el Wilcoxon Rank-Sum Test para comprobar si dos muestras independientes provienen de la misma distribución, comparando las proporciones observadas (con un p = 0.006) y las esperadas (con p0 = 0.003)
 
 ```{r}
-# Frecuencias observadas
-observed <- c(2, 4, 4, 5, 2)
+# Parámetros iniciales
+n <- 1000          # Tamaño de la muestra
+p0 <- 0.003        # Proporción esperada
+p <- 0.006         # Proporción observada
 
-# Distribución uniforme
-expected <- rep(50/5, 5)
-# Realizar la prueba chi-cuadrado
-chi2_test <- chisq.test(observed, p = rep(1/5, 5))
+muestra_observada <- rbinom(n = n, size = 1, prob = p)  
+muestra_esperada <- rbinom(n = n, size = 1, prob = p0)
 
-# Mostrar los resultados
-print(chi2_test)
+test <- wilcox.test(muestra_observada, muestra_esperada, alternative = "greater")
+
+print(test)
 ```
