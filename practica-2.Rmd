@@ -167,7 +167,6 @@ cat("θ = arcsin(sqrt(p)) - arcsin(sqrt(p0)): n =", ceiling(n3), "\n")
 
 ```
 
-
 ### Ejercicio 8
 
 ```{r}
@@ -206,3 +205,32 @@ for (size in n) {
 
 ```
 
+### Ejercicio 9
+
+### Ejercicio 10
+
+Para comparar una proporción con el valor de referencia, una prueba adecuada sería la prueba del signo. Nuestras hipótesis para el contraste serían:
+
+H0 : el estadístico de la prueba es mayor que el valor crítico H1 : el estadístico de la prueba es menor o igual que el valor crítico
+
+El código en R para dicha prueba sería:
+
+```{r}
+n <- 1000
+p0 <- 0.3
+p <- 0.4
+r <- p*n
+
+prueba <- binom.test(x = r, n = n, p = p0, alternative = "greater")
+
+print(prueba)
+
+# Para comprobar si rechazamos o no H0 (elegimos nivel de significancia del 5%):
+
+if(prueba$p.value < 0.05){
+  print("Rechazamos H0")
+}else{
+    print("No existen evidencias significativas para rechazar H0")
+}
+
+```
