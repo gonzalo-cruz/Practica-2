@@ -7,6 +7,8 @@ output:
     latex_engine: xelatex
 ---
 
+## Introducción
+
 ### Ejercicio 1
 
 Demostrar que la log-verosimilitud de p basada en n observaciones es:
@@ -53,6 +55,8 @@ $$
 
 ### Ejercicio 3
 
+## Contraste de hipótesis
+
 ### Ejercicio 4
 
 ```{r}
@@ -95,6 +99,8 @@ print (result3)
 
 ### Ejercicio 5
 
+## Cálculo del tamaño muestral
+
 ### Ejercicio 6
 
 $$
@@ -131,6 +137,7 @@ $$
 n = \frac{(z_{\alpha} + z_{\beta})^2}{4 \theta^2}= \frac{( z_{\alpha} + z_{\beta})^2}{4(\arcsin\sqrt p-\arcsin\sqrt p_0)²}
 $$
 
+## Potencia y error de tipo I
 
 ### Ejercicio 7
 
