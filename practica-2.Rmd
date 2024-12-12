@@ -2,7 +2,9 @@
 title: "Practica 2"
 author: "Gonzalo Cruz Gómez, Daniel Fernandez Magariños"
 date: "2024-11-26"
-output: pdf_document
+output:
+  pdf_document:
+    latex_engine: xelatex
 ---
 
 ### Ejercicio 1
@@ -129,13 +131,6 @@ $$
 n = \frac{(z_{\alpha} + z_{\beta})^2}{4 \theta^2}= \frac{( z_{\alpha} + z_{\beta})^2}{4(\arcsin\sqrt p-\arcsin\sqrt p_0)²}
 $$
 
-$$
-Para\space valores\space de \space\theta_R\space pequeños:
-$$
-
-$$
-\theta = \frac{p - p_0}{2p}, \quad n = \frac{4 p_0 \, (z_{\alpha} + z_{\beta})^2}{(p - p_0)^2}
-$$
 
 ### Ejercicio 7
 
